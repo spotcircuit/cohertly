@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   FaChartLine, FaUserFriends, FaHandshake, FaBell, FaEnvelope, 
   FaHome, FaCog, FaSignOutAlt, FaSearch, FaPlus, FaChevronRight,
   FaCalendarAlt, FaChartBar, FaLightbulb, FaStar, FaArrowUp, FaArrowDown,
-  FaUser
+  FaUser, FaFlask, FaNetworkWired
 } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '../components/Layout';
 
 export default function Dashboard() {
+  // State for showing v2 banner
+  const [showV2Banner, setShowV2Banner] = useState(false);
+  
+  // Check if we're in development mode
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      setShowV2Banner(true);
+    }
+  }, []);
+  
   // Add CSS for glass button styling
   const glassButtonStyle = `
     .btn-glass {
@@ -63,6 +73,25 @@ export default function Dashboard() {
 
   return (
     <Layout>
+      {/* V2 Feature Banner - Only shows in development */}
+      {showV2Banner && (
+        <div className="mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-lg shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <FaFlask className="text-xl mr-2" />
+              <div>
+                <h3 className="font-bold">V2 Features Available</h3>
+                <p className="text-sm opacity-90">You're viewing the development branch with v2 features</p>
+              </div>
+            </div>
+            <Link href="/v2/network" className="flex items-center bg-white text-blue-700 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors">
+              <FaNetworkWired className="mr-2" />
+              <span>Try Network Visualization</span>
+            </Link>
+          </div>
+        </div>
+      )}
+      
       {/* Hero Image with Adjusted Height */}
       <div className="relative w-full overflow-hidden h-[180px] rounded-lg">
         <Image 
