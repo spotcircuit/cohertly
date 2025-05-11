@@ -1,7 +1,24 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { FaMagic, FaRocket, FaUserFriends, FaChartLine, FaArrowRight } from 'react-icons/fa';
+import { useFeatureFlags } from '../utils/featureFlags';
 
 export default function Home() {
+  const router = useRouter();
+  const featureFlags = useFeatureFlags();
+  
+  // Redirect to v2 dashboard when in development mode or v2 features are enabled
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      // Check for v2 mode in URL query param or environment variable
+      const isV2Mode = router.query.v2 === 'true' || process.env.NEXT_PUBLIC_V2_MODE === 'true';
+      
+      if (isV2Mode) {
+        router.push('/v2/dashboard');
+      }
+    }
+  }, [router]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-100">
       {/* Hero Section */}
@@ -11,9 +28,14 @@ export default function Home() {
             <FaMagic className="text-blue-600 text-2xl" />
             <span className="text-2xl font-bold gradient-text">Cohert</span>
           </div>
-          <Link href="/dashboard" className="btn-glass">
-            Sign In
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/v2/dashboard" className="btn-glass bg-blue-600 text-white hover:bg-blue-700">
+              Try V2
+            </Link>
+            <Link href="/dashboard" className="btn-glass">
+              Sign In
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -29,11 +51,11 @@ export default function Home() {
                 Connect with the perfect partners, grow your business, and never miss an opportunity again.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/dashboard" className="btn-primary flex items-center justify-center gap-2">
-                  Get Started <FaArrowRight />
+                <Link href="/v2/dashboard" className="btn-primary flex items-center justify-center gap-2">
+                  Try V2 <FaArrowRight />
                 </Link>
                 <Link href="/dashboard" className="btn-glass">
-                  Learn More
+                  V1 Dashboard
                 </Link>
               </div>
             </div>

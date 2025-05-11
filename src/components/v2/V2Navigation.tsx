@@ -1,7 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { useFeatureFlags } from '../../utils/featureFlags';
-import { FaFlask, FaNetworkWired, FaUserFriends, FaChartLine, FaCog } from 'react-icons/fa';
+import { 
+  FaFlask, FaNetworkWired, FaUserFriends, FaChartLine, FaCog,
+  FaHome, FaHandshake, FaUserPlus, FaDatabase
+} from 'react-icons/fa';
 
 const V2Navigation: React.FC = () => {
   const featureFlags = useFeatureFlags();
@@ -19,20 +22,30 @@ const V2Navigation: React.FC = () => {
           <span className="font-medium">V2 Features</span>
         </div>
         
-        <div className="flex">
+        <div className="flex flex-wrap">
+          <Link href="/v2/dashboard" className="px-3 py-2 hover:bg-blue-700 flex items-center">
+            <FaHome className="mr-1" />
+            <span>Dashboard</span>
+          </Link>
+          
           <Link href="/v2/network" className="px-3 py-2 hover:bg-blue-700 flex items-center">
             <FaNetworkWired className="mr-1" />
             <span>Network</span>
           </Link>
           
-          <Link href="/dashboard" className="px-3 py-2 hover:bg-blue-700 flex items-center">
-            <FaChartLine className="mr-1" />
-            <span>Dashboard</span>
+          <Link href="/v2/matches" className="px-3 py-2 hover:bg-blue-700 flex items-center">
+            <FaHandshake className="mr-1" />
+            <span>Matches</span>
           </Link>
           
-          <Link href="/referrals" className="px-3 py-2 hover:bg-blue-700 flex items-center">
-            <FaUserFriends className="mr-1" />
-            <span>Referrals</span>
+          <Link href="/v2/contacts" className="px-3 py-2 hover:bg-blue-700 flex items-center">
+            <FaUserPlus className="mr-1" />
+            <span>Contacts</span>
+          </Link>
+          
+          <Link href="/dashboard" className="px-3 py-2 hover:bg-blue-700 flex items-center">
+            <FaChartLine className="mr-1" />
+            <span>V1 Dashboard</span>
           </Link>
           
           <Link href="/settings" className="px-3 py-2 hover:bg-blue-700 rounded-r-lg flex items-center">
