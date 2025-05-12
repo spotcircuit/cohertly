@@ -8,16 +8,10 @@ export default function Home() {
   const router = useRouter();
   const featureFlags = useFeatureFlags();
   
-  // Redirect to v2 dashboard when in development mode or v2 features are enabled
+  // Always redirect to v2 dashboard by default
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      // Check for v2 mode in URL query param or environment variable
-      const isV2Mode = router.query.v2 === 'true' || process.env.NEXT_PUBLIC_V2_MODE === 'true';
-      
-      if (isV2Mode) {
-        router.push('/v2/dashboard');
-      }
-    }
+    // Redirect to v2 dashboard
+    router.push('/v2/dashboard');
   }, [router]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-100">
@@ -30,9 +24,9 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-2">
             <Link href="/v2/dashboard" className="btn-glass bg-blue-600 text-white hover:bg-blue-700">
-              Try V2
+              Get Started
             </Link>
-            <Link href="/dashboard" className="btn-glass">
+            <Link href="/v2/dashboard" className="btn-glass">
               Sign In
             </Link>
           </div>
@@ -52,10 +46,10 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link href="/v2/dashboard" className="btn-primary flex items-center justify-center gap-2">
-                  Try V2 <FaArrowRight />
+                  Get Started <FaArrowRight />
                 </Link>
-                <Link href="/dashboard" className="btn-glass">
-                  V1 Dashboard
+                <Link href="/v2/dashboard" className="btn-glass">
+                  Dashboard
                 </Link>
               </div>
             </div>
@@ -158,7 +152,7 @@ export default function Home() {
             <p className="text-xl mb-8 opacity-90">
               Join thousands of professionals who are growing their businesses with AI-powered referrals.
             </p>
-            <Link href="/dashboard" className="btn-glass bg-white text-blue-600 hover:bg-opacity-100 px-8 py-3 text-lg font-medium">
+            <Link href="/v2/dashboard" className="btn-glass bg-white text-blue-600 hover:bg-opacity-100 px-8 py-3 text-lg font-medium">
               Get Started Today
             </Link>
           </div>
